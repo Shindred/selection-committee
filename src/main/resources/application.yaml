@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost/selection_committee
+    password: youwillbesent
+    username: postgres
+  jpa:
+    show-sql: true
+    generate-ddl: false
+  freemarker:
+    expose-request-attributes: true
