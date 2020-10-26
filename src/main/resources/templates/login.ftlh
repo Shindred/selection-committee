@@ -13,4 +13,5 @@
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
+    <a class="nav-link" href="/registration">Registration</a>
 </@p.page>
