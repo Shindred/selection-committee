@@ -2,6 +2,8 @@
 
 <@p.page "Faculties">
 
+    <#include "parts/navbar.ftlh">
+
     <table>
         <thead>
         <tr>
