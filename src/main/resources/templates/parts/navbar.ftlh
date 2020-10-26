@@ -1,5 +1,5 @@
 <#include "security.ftlh">
-<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #533C73">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="/">Selection Committee</a>
     <div class="collapse navbar-collapse" id="navbarText">
         <ul class="navbar-nav mr-auto">
@@ -11,7 +11,20 @@
             </li>
             <#if isAdmin>
                 <li class="nav-item">
-                    <a class="nav-link" href="/faculty-list">View user list</a>
+                    <a class="nav-link" href="/admin/user-list">View user list</a>
+                </li>
+            </#if>
+            <#if !notAuthenticated>
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout">Log out</a>
+                </li>
+            </#if>
+            <#if notAuthenticated>
+                <li class="nav-item">
+                    <a class="nav-link" href="/login">Log in</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/registration">Registration</a>
                 </li>
             </#if>
         </ul>
