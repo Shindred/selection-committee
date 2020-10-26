@@ -1,5 +1,6 @@
 package com.project.selectioncommittee.controller;
 
+import com.project.selectioncommittee.entity.Role;
 import com.project.selectioncommittee.repository.UserRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +18,7 @@ public class AdminController {
 
     @GetMapping("/user-list")
     public String getAllUsers(Model model) {
-        model.addAttribute("userList", userRepository.findAll());
+        model.addAttribute("userList", userRepository.findAllByRoles(Role.USER));
         return "user-list";
     }
 }
