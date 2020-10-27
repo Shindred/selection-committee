@@ -32,6 +32,8 @@ public class WebServiceConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .loginPage("/login")
                 .and()
+                .exceptionHandling().accessDeniedPage("/faculty-list")
+                .and()
                 .logout(logout -> logout
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))
                 .logoutSuccessUrl("/"));
