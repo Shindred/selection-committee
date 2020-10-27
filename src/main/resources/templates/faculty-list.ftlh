@@ -1,9 +1,9 @@
 <#import "parts/page.ftlh" as p>
+<#import "parts/pager.ftlh" as pager>
 
 <@p.page "Faculties">
 
     <#include "parts/navbar.ftlh">
-
     <table class="table">
         <thead>
         <tr>
@@ -16,7 +16,7 @@
         </tr>
         </thead>
         <tbody>
-        <#list facultyList as faculty>
+        <#list facultyList.content as faculty>
             <tr>
                 <th scope="row">${faculty.id}</th>
                 <th scope="row">${faculty.name}</th>
@@ -28,5 +28,6 @@
         </#list>
         </tbody>
     </table>
+    <@pager.pager url facultyList/>
 
 </@p.page>

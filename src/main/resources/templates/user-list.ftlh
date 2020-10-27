@@ -1,4 +1,5 @@
 <#import "parts/page.ftlh" as p>
+<#import "parts/pager.ftlh" as pager>
 <@p.page "User list">
     <#include "parts/navbar.ftlh">
     <table class="table">
@@ -16,7 +17,7 @@
         </tr>
         </thead>
         <tbody>
-        <#list userList as user>
+        <#list userList.content as user>
             <tr>
                 <th scope="row">${user.id}</th>
                 <th scope="row">${user.username}</th>
@@ -30,4 +31,5 @@
         </#list>
         </tbody>
     </table>
+    <@pager.pager url userList/>
 </@p.page>
