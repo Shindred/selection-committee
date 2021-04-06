@@ -1,53 +1,73 @@
 package com.project.selectioncommittee.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.*;
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import java.util.Collection;
 import java.util.Set;
 
+@Data
 @Entity
 @Table(name = "usr")
 public class User implements UserDetails {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter
     private Integer id;
-    @Getter
-    @Setter
-    private String firstName;
-    @Getter
-    @Setter
-    private String secondName;
-    @Getter
-    @Setter
-    private String lastName;
-    @Getter
-    @Setter
-    private String city;
-    @Getter
-    @Setter
-    private String region;
-    @Getter
-    @Setter
-    private String username;
-    @Getter
-    @Setter
-    private String email;
-    @Getter
-    @Setter
-    private String password;
+
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
-    @Getter
-    @Setter
     private Set<Role> roles;
 
+    @OneToOne
+    @JoinColumn(name = "certificate_id")
+    private Certificate certificate;
+
+//    @OneToMany(mappedBy = "examResultId.user")
+//    private Set<ExamResult> examResults;
+
+    @Column
+    private String firstName;
+
+    @Column
+    private String secondName;
+
+    @Column
+    private String lastName;
+
+    @Column
+    private String city;
+
+    @Column
+    private String region;
+
+    @Column
+    private String username;
+
+    @Column
+    private String email;
+
+    @Column
+    private String password;
+
+    @Column
+    private boolean isBanned;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -61,7 +81,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return !isBanned();
     }
 
     @Override
