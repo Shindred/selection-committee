@@ -1,4 +1,8 @@
 spring:
+  data:
+    web:
+      pageable:
+        one-indexed-parameters: true
   datasource:
     url: jdbc:postgresql://localhost/selection_committee
     password: pass
@@ -6,5 +10,7 @@ spring:
   jpa:
     show-sql: true
     generate-ddl: false
-  freemarker:
-    expose-request-attributes: true
+    hibernate:
+      ddl-auto: validate
+  thymeleaf:
+    cache: false

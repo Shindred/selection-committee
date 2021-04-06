@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<ul class="pagination"
+    th:fragment="pager"
+    th:if="${page.totalPages > 0}">
+    <li class="page-item disabled">
+        <a class="page-link" href="#" tabindex="-1">Pages</a>
+    </li>
+    <li class="page-item"
+        th:switch="${param.sort}"
+        th:each="pageNumber: ${pageNumbers}">
+        <a th:case="null"
+                class="page-link"
+           tabindex="-1"
+           th:href="@{__${#httpServletRequest.requestURI}__(page=${pageNumber})}"
+           th:text="${pageNumber}"></a>
+        <a th:case="*"
+           class="page-link"
+           tabindex="-1"
+           th:href="@{__${#httpServletRequest.requestURI}__(page=${pageNumber}, sort=${param.sort})}"
+           th:text="${pageNumber}"></a>
+    </li>
+</ul>
+</body>
+</html>
