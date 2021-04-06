@@ -1,34 +1,44 @@
 package com.project.selectioncommittee.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import java.util.Set;
 
+@Data
 @Entity
-@Table(name = "faculty")
 public class Faculty {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Getter
     private Integer id;
-    @Getter
-    @Setter
+
+    @Column
     private String name;
-    @Getter
-    @Setter
+
     @Column(name = "budget_places")
     private int budgetPlacesAmount;
-    @Getter
-    @Setter
+
     @Column(name = "contract_places")
     private int contractPlacesAmount;
-    @Getter
-    @Setter
-    @Column(name = "passing_grade")
+
+    @Column
     private int passingGrade;
-    @Getter
-    @Setter
-    @Column(name = "statement_is_finalized")
+
+    @Column
     private boolean statementIsFinalized;
+
+    @ManyToMany
+    @JoinTable(
+            name = "faculty_exam_subjects",
+            joinColumns = @JoinColumn(name = "faculty_id"),
+            inverseJoinColumns = @JoinColumn(name = "exam_subject_id")
+    )
+    private Set<ExamSubject> examSubjects;
 }
