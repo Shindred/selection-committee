@@ -1,6 +1,7 @@
 package com.project.selectioncommittee.entity;
 
 import lombok.Data;
+import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -15,6 +16,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.util.Collection;
@@ -39,8 +41,9 @@ public class User implements UserDetails {
     @JoinColumn(name = "certificate_id")
     private Certificate certificate;
 
-//    @OneToMany(mappedBy = "examResultId.user")
-//    private Set<ExamResult> examResults;
+    @ToString.Exclude
+    @OneToMany(mappedBy = "examResultId.user")
+    private Set<ExamResult> examResults;
 
     @Column
     private String firstName;
