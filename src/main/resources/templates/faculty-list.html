@@ -70,9 +70,12 @@
             <th scope="row" th:text="${faculty.passingGrade}"></th>
             <th scope="row" th:text="${faculty.statementIsFinalized ? 'Yes' : 'No'}"></th>
             <th scope="row" th:if="${isAdmin}">
-                <a th:href="@{/admin/edit-faculty(id=${faculty.id})}">Edit faculty</a></th>
+                <a th:href="@{/admin/faculty/{facultyId}(facultyId=${faculty.id})}">Edit faculty</a></th>
             <th scope="row" th:if="${isAdmin}">
-                <a th:href="@{/admin/delete-faculty(id=${faculty.id})}">Delete faculty</a></th>
+                <form th:method="delete" th:action="@{/admin/faculty/{facultyId}(facultyId=${faculty.id})}">
+                    <input type="submit" value="Delete faculty"/>
+                </form>
+            </th>
         </tr>
         </tbody>
     </table>

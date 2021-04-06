@@ -13,13 +13,13 @@
                 <a class="nav-link" href="/">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/faculty-list">View faculties</a>
+                <a class="nav-link" href="/faculties">View faculties</a>
             </li>
             <li class="nav-item" th:if="${isAdmin}">
-                <a class="nav-link" href="/admin/user-list">View user list</a>
+                <a class="nav-link" href="/admin/users">View user list</a>
             </li>
             <li class="nav-item" th:if="${isAdmin}">
-                <a class="nav-link" href="/admin/add-faculty">Add faculty</a>
+                <a class="nav-link" href="/admin/faculty">Add faculty</a>
             </li>
             <li class="nav-item" th:if="${isAuthorized}">
                 <a class="nav-link" href="/logout">Log out</a>
@@ -32,7 +32,7 @@
             </li>
         </ul>
         <div class="navbar-text" th:if="${isAuthorized}">
-            <a th:href="@{/user/{userId}/profile(userId = ${user.id})}" th:text="${user.username}">
+            <a th:href="@{/user/{userId}(userId = ${user.id})}" th:text="${user.username}">
                 Profile
             </a>
         </div>

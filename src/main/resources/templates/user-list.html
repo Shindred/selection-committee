@@ -40,7 +40,7 @@
             <th scope="row" th:text="${user.region}"></th>
             <th scope="row" th:text="${user.accountNonLocked ? 'No' : 'Yes'}"></th>
             <th scope="row">
-                <form method="post" action="/admin/user-list" th:object="${user}">
+                <form method="post" action="/admin/users" th:object="${user}">
                     <input type="hidden" name="_csrf" th:value="${_csrf.token}">
                     <input type="hidden" name="id" th:value="*{id}">
                     <input type="hidden" name="isBanned" th:value="*{!banned}">

@@ -14,3 +14,7 @@ spring:
       ddl-auto: validate
   thymeleaf:
     cache: false
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true

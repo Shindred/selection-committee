@@ -12,7 +12,7 @@
 <div class="container mt-5">
     <div th:replace="parts/navbar :: navbar"></div>
     <br>
-    <form method="post" action="/admin/edit-faculty">
+    <form th:method="patch" th:action="@{/admin/faculty/{facultyId}(facultyId=${faculty.id})}">
         <input type="hidden" name="_csrf" th:value="${_csrf.token}">
         <input type="hidden" name="id" th:value="${param.id}">
         <div class="form-group">
