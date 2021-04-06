@@ -17,7 +17,7 @@ public class UserController {
     private final UserService userService;
 
     @PreAuthorize("#userId == authentication.principal.id")
-    @GetMapping("/{userId}/profile")
+    @GetMapping("/{userId}")
     public String getProfile(@PathVariable Integer userId, Model model) {
 
         model.addAttribute("user", userService.findById(userId));

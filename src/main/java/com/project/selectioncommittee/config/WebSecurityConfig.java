@@ -34,7 +34,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .loginPage("/login")
                 .and()
-                .exceptionHandling().accessDeniedHandler(new AccessDeniedHandler("/faculty-list"))
+                .exceptionHandling().accessDeniedHandler(new AccessDeniedHandler("/faculties"))
                 .and()
                 .logout(logout -> logout
                         .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))

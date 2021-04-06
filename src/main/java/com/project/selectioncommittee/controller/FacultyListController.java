@@ -17,7 +17,7 @@ import java.util.stream.IntStream;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/faculty-list")
+@RequestMapping("/faculties")
 public class FacultyListController {
 
     private final FacultyService facultyService;

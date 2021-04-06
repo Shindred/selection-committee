@@ -13,6 +13,10 @@ public class FacultyService {
 
     private final FacultyRepository facultyRepository;
 
+    public Faculty findById(Integer facultyId) {
+        return facultyRepository.findById(facultyId).orElseThrow(RuntimeException::new);
+    }
+
     public Page<Faculty> loadFaculties(Pageable pageable) {
         return facultyRepository.findAll(pageable);
     }
@@ -21,20 +25,26 @@ public class FacultyService {
         return facultyRepository.save(faculty);
     }
 
-    public Faculty edit(Integer idToEdit, Faculty faculty) {
-        Faculty facultyToEdit = facultyRepository.getOne(idToEdit);
-        if (faculty.getName() != null && !faculty.getName().equals("")) {
-            facultyToEdit.setName(faculty.getName());
+    public Faculty edit(Faculty faculty) {
+        Faculty facultyToEdit = facultyRepository.getOne(faculty.getId());
+        String facultyName = faculty.getName();
+        int budgetPlaces = faculty.getBudgetPlacesAmount();
+        int contractPlaces = faculty.getContractPlacesAmount();
+        int passingGrade = faculty.getPassingGrade();
+
+        if (facultyName != null && !facultyName.equals("")) {
+            facultyToEdit.setName(facultyName);
         }
-        if (faculty.getBudgetPlacesAmount() != 0) {
-            facultyToEdit.setBudgetPlacesAmount(faculty.getBudgetPlacesAmount());
+        if (budgetPlaces != 0) {
+            facultyToEdit.setBudgetPlacesAmount(budgetPlaces);
         }
-        if (faculty.getContractPlacesAmount() != 0) {
-            facultyToEdit.setContractPlacesAmount(faculty.getContractPlacesAmount());
+        if (contractPlaces != 0) {
+            facultyToEdit.setContractPlacesAmount(contractPlaces);
         }
-        if (faculty.getPassingGrade() != 0) {
-            facultyToEdit.setPassingGrade(faculty.getPassingGrade());
+        if (passingGrade != 0) {
+            facultyToEdit.setPassingGrade(passingGrade);
         }
+
         return facultyRepository.save(facultyToEdit);
     }
 
