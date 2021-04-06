@@ -1,6 +1,7 @@
 package com.project.selectioncommittee.entity;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -41,6 +42,7 @@ public class User implements UserDetails {
     @JoinColumn(name = "certificate_id")
     private Certificate certificate;
 
+    @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @OneToMany(mappedBy = "examResultId.user")
     private Set<ExamResult> examResults;

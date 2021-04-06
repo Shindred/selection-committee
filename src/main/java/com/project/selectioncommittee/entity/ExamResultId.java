@@ -1,6 +1,7 @@
 package com.project.selectioncommittee.entity;
 
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
@@ -12,6 +13,7 @@ import java.io.Serializable;
 @Embeddable
 public class ExamResultId implements Serializable {
 
+    @ToString.Exclude
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
