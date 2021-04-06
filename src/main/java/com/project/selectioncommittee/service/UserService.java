@@ -41,4 +41,10 @@ public class UserService implements UserDetailsService {
         user.setPassword(encoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
+
+    public void setBanStatus(Integer id, boolean isBanned) {
+        User user = userRepository.getOne(id);
+        user.setBanned(isBanned);
+        userRepository.save(user);
+    }
 }
