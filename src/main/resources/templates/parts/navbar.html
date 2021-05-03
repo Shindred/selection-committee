@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark"
+<nav class="navbar navbar-expand-lg navbar-dark custom-navigation"
      th:fragment="navbar"
      th:with="user = ${#authentication.principal},
      isAuthorized = ${!user.equals('anonymousUser')},
@@ -13,7 +13,7 @@
                 <a class="nav-link" href="/">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/faculties">View faculties</a>
+                <a class="nav-link" href="/faculty">View faculties</a>
             </li>
             <li class="nav-item" th:if="${isAdmin}">
                 <a class="nav-link" href="/admin/users">View user list</a>

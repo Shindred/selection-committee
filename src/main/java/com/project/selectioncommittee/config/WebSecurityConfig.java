@@ -24,7 +24,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .authorizeRequests()
-                .antMatchers("/", "/images/**").permitAll()
+                .antMatchers("/", "/static/**").permitAll()
 
                 .antMatchers("/login", "/registration").not().fullyAuthenticated()
                 .antMatchers("/logout").fullyAuthenticated()
@@ -34,7 +34,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .loginPage("/login")
                 .and()
-                .exceptionHandling().accessDeniedHandler(new AccessDeniedHandler("/faculties"))
+                .exceptionHandling().accessDeniedHandler(new AccessDeniedHandler("/faculty"))
                 .and()
                 .logout(logout -> logout
                         .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))

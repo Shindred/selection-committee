@@ -1,6 +1,8 @@
 package com.project.selectioncommittee.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.Embeddable;
@@ -10,6 +12,8 @@ import javax.persistence.OneToOne;
 import java.io.Serializable;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Embeddable
 public class ExamResultId implements Serializable {
 

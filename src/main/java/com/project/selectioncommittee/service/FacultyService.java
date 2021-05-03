@@ -1,54 +1,18 @@
 package com.project.selectioncommittee.service;
 
 import com.project.selectioncommittee.entity.Faculty;
-import com.project.selectioncommittee.repository.FacultyRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
 
-@Service
-@RequiredArgsConstructor
-public class FacultyService {
+public interface FacultyService {
 
-    private final FacultyRepository facultyRepository;
+    Faculty findById(Integer facultyId);
 
-    public Faculty findById(Integer facultyId) {
-        return facultyRepository.findById(facultyId).orElseThrow(RuntimeException::new);
-    }
+    Page<Faculty> loadFaculties(Pageable pageable);
 
-    public Page<Faculty> loadFaculties(Pageable pageable) {
-        return facultyRepository.findAll(pageable);
-    }
+    Faculty save(Faculty faculty);
 
-    public Faculty save(Faculty faculty) {
-        return facultyRepository.save(faculty);
-    }
+    Faculty edit(Faculty faculty);
 
-    public Faculty edit(Faculty faculty) {
-        Faculty facultyToEdit = facultyRepository.getOne(faculty.getId());
-        String facultyName = faculty.getName();
-        int budgetPlaces = faculty.getBudgetPlacesAmount();
-        int contractPlaces = faculty.getContractPlacesAmount();
-        int passingGrade = faculty.getPassingGrade();
-
-        if (facultyName != null && !facultyName.equals("")) {
-            facultyToEdit.setName(facultyName);
-        }
-        if (budgetPlaces != 0) {
-            facultyToEdit.setBudgetPlacesAmount(budgetPlaces);
-        }
-        if (contractPlaces != 0) {
-            facultyToEdit.setContractPlacesAmount(contractPlaces);
-        }
-        if (passingGrade != 0) {
-            facultyToEdit.setPassingGrade(passingGrade);
-        }
-
-        return facultyRepository.save(facultyToEdit);
-    }
-
-    public void delete(Integer id) {
-        facultyRepository.deleteById(id);
-    }
+    void delete(Integer id);
 }

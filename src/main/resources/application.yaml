@@ -9,7 +9,6 @@ spring:
     username: postgres
   jpa:
     show-sql: true
-    generate-ddl: false
     hibernate:
       ddl-auto: validate
   thymeleaf:
@@ -18,3 +17,5 @@ spring:
     hiddenmethod:
       filter:
         enabled: true
+  resources:
+    static-locations: classpath:/static/

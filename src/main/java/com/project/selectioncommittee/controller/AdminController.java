@@ -1,9 +1,13 @@
 package com.project.selectioncommittee.controller;
 
+import com.project.selectioncommittee.entity.ApplicantResult;
 import com.project.selectioncommittee.entity.Faculty;
+import com.project.selectioncommittee.entity.User;
+import com.project.selectioncommittee.service.ApplicantResultService;
 import com.project.selectioncommittee.service.FacultyService;
 import com.project.selectioncommittee.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -16,20 +20,28 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/admin")
 public class AdminController {
+
     private final UserService userService;
     private final FacultyService facultyService;
+    private final ApplicantResultService applicantResultService;
 
     @GetMapping("/users")
     public String getAllUsers(
             @PageableDefault(sort = {"id"}, direction = Sort.Direction.ASC) Pageable pageable,
             Model model) {
-        model.addAttribute("usersPage", userService.loadUsers(pageable));
-        model.addAttribute("url", "/admin/user-list");
+        Page<User> usersPage = userService.loadUsers(pageable);
+
+        model.addAttribute("usersPage", usersPage);
+        model.addAttribute("pageNumbers", getPageNumbers(usersPage));
         return "user-list";
     }
 
@@ -47,7 +59,7 @@ public class AdminController {
     @PostMapping("/faculty")
     public String addFaculty(Faculty faculty) {
         facultyService.save(faculty);
-        return "redirect:/faculties";
+        return "redirect:/faculty";
     }
 
     @GetMapping("/faculty/{facultyId}")
@@ -70,12 +82,52 @@ public class AdminController {
         }
 
         facultyService.edit(faculty);
-        return "redirect:/faculties";
+        return "redirect:/faculty";
     }
 
     @DeleteMapping("/faculty/{facultyId}")
     public String deleteFaculty(@PathVariable Integer facultyId) {
         facultyService.delete(facultyId);
-        return "redirect:/faculties";
+        return "redirect:/faculty";
+    }
+
+    @GetMapping("/applicant-result/by/enstatus/{enrollmentStatusId}")
+    public String getApplicantResults(@PathVariable Integer enrollmentStatusId, Pageable pageable, Model model) {
+        Page<ApplicantResult> applicantResultPage = applicantResultService.findAllByEnrollmentStatusId(
+                pageable, enrollmentStatusId
+        );
+
+        model.addAttribute("applicantResultPage", applicantResultPage);
+        model.addAttribute("pageNumbers", getPageNumbers(applicantResultPage));
+
+        return "applicant-results";
+    }
+
+    @GetMapping("/applicant-result/by/faculty/{facultyId}")
+    public String getApplicantResultsByFaculty(@PathVariable Integer facultyId, Pageable pageable, Model model) {
+
+        Faculty faculty = facultyService.findById(facultyId);
+
+        Page<ApplicantResult> applicantResultPage = applicantResultService.findAllByFacultyId(pageable, facultyId);
+
+        model.addAttribute("faculty", faculty);
+        model.addAttribute("applicantResultPage", applicantResultPage);
+        model.addAttribute("pageNumbers", getPageNumbers(applicantResultPage));
+
+        return "applicant-results";
+    }
+
+    @PostMapping("/applicant-result/faculty/{facultyId}")
+    public String finalizeTheStatement(@PathVariable Integer facultyId) {
+
+        applicantResultService.finalizeTheStatement(facultyId);
+
+        return "redirect:/admin/applicant-result/by/faculty/" + facultyId;
+    }
+
+    private List<Integer> getPageNumbers(Page<?> page) {
+        return IntStream.rangeClosed(1, page.getTotalPages())
+                .boxed()
+                .collect(Collectors.toList());
     }
 }
