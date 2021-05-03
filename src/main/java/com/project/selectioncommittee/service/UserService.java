@@ -1,50 +1,18 @@
 package com.project.selectioncommittee.service;
 
 import com.project.selectioncommittee.entity.Certificate;
-import com.project.selectioncommittee.entity.Role;
 import com.project.selectioncommittee.entity.User;
-import com.project.selectioncommittee.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
 
-import java.util.Collections;
+public interface UserService extends UserDetailsService {
 
-@Service
-@RequiredArgsConstructor
-public class UserService implements UserDetailsService {
+    User findById(Integer userId);
 
-    private final UserRepository userRepository;
-    private final PasswordEncoder encoder;
+    Page<User> loadUsers(Pageable pageable);
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByUsername(username);
-    }
+    User save(User user, Certificate certificate);
 
-    public User findById(Integer userId) {
-        return userRepository.findById(userId).orElseThrow(RuntimeException::new);
-    }
-
-    public Page<User> loadUsers(Pageable pageable) {
-        return userRepository.findAllByRoles(Role.USER, pageable);
-    }
-
-    public User save(User user, Certificate certificate) {
-        user.setCertificate(certificate);
-        user.setRoles(Collections.singleton(Role.USER));
-        user.setPassword(encoder.encode(user.getPassword()));
-        return userRepository.save(user);
-    }
-
-    public void setBanStatus(Integer id, boolean isBanned) {
-        User user = userRepository.getOne(id);
-        user.setBanned(isBanned);
-        userRepository.save(user);
-    }
+    void setBanStatus(Integer id, boolean isBanned);
 }

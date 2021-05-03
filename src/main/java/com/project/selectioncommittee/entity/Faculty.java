@@ -1,6 +1,8 @@
 package com.project.selectioncommittee.entity;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import java.util.Set;
 
 @Data
@@ -19,7 +22,7 @@ public class Faculty {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @Column
+    @Column(unique = true)
     private String name;
 
     @Column(name = "budget_places")
@@ -41,4 +44,9 @@ public class Faculty {
             inverseJoinColumns = @JoinColumn(name = "exam_subject_id")
     )
     private Set<ExamSubject> examSubjects;
+
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @OneToMany(mappedBy = "faculty")
+    private Set<ApplicantResult> applicantResults;
 }

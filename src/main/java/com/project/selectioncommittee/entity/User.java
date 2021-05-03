@@ -47,6 +47,11 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "examResultId.user")
     private Set<ExamResult> examResults;
 
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @OneToMany(mappedBy = "user")
+    private Set<ApplicantResult> applicantResults;
+
     @Column
     private String firstName;
 
