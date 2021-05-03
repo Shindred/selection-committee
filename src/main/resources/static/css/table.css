@@ -1,0 +1,24 @@
+.styled-table {
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 700px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+.styled-table thead tr, .submit-button {
+    background-color: rgb(136, 80, 191);
+    color: #ffffff;
+}
+.styled-table th,
+.styled-table td {
+    text-align: center;
+    /*padding: 12px 15px;*/
+}
+
+.main-div-with {
+    max-width: 1280px;
+}
+
+.custom-navigation {
+    background-color: rgb(136, 80, 191);
+}

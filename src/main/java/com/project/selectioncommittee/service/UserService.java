@@ -1,22 +1,18 @@
 package com.project.selectioncommittee.service;
 
-import com.project.selectioncommittee.repository.UserRepository;
-import org.springframework.security.core.userdetails.UserDetails;
+import com.project.selectioncommittee.entity.Certificate;
+import com.project.selectioncommittee.entity.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
 
-@Service
-public class UserService implements UserDetailsService {
-    private final UserRepository userRepository;
+public interface UserService extends UserDetailsService {
 
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    User findById(Integer userId);
 
+    Page<User> loadUsers(Pageable pageable);
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByUsername(username);
-    }
+    User save(User user, Certificate certificate);
+
+    void setBanStatus(Integer id, boolean isBanned);
 }
