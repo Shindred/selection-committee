@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Profile</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+          integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2"
+          crossorigin="anonymous">
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+    <meta name="viewport" content="width=device.width, initial-scale=1, shrink-to-fit-no">
+    <link rel="stylesheet" th:href="@{/static/css/table.css}">
+</head>
+
+<body>
+<div class="container mt-5 main-div-with">
+    <div th:replace="parts/navbar :: navbar"></div>
+
+    <table class="styled-table table">
+        <thead>
+        <tr>
+            <th>Username</th>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Second name</th>
+            <th>Email</th>
+            <th>Ukrainian language grade</th>
+            <th>Mathematics grade</th>
+            <th>History grade</th>
+            <th>Physics grade</th>
+            <th>Geography grade</th>
+            <th>English language grade</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th th:text="${user.username}"></th>
+            <th th:text="${user.firstName}"></th>
+            <th th:text="${user.lastName}"></th>
+            <th th:text="${user.secondName}"></th>
+            <th th:text="${user.email}"></th>
+            <th th:text="${user.certificate.ukrainianLanguageGrade}"></th>
+            <th th:text="${user.certificate.mathematicsGrade}"></th>
+            <th th:text="${user.certificate.historyGrade}"></th>
+            <th th:text="${user.certificate.physicsGrade}"></th>
+            <th th:text="${user.certificate.geographyGrade}"></th>
+            <th th:text="${user.certificate.englishLanguageGrade}"></th>
+        </tr>
+        </tbody>
+    </table>
+
+    <p class="text-center">
+        <strong>Exam Results:</strong>
+    </p>
+    <table class="styled-table table">
+        <thead>
+        <tr>
+            <th>Exam Subject's Name</th>
+            <th>Grade</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="examResult: ${user.examResults}">
+            <th th:text="${examResult.examResultId.examSubject.name}"></th>
+            <th th:text="${examResult.grade}"></th>
+        </tr>
+        </tbody>
+    </table>
+
+    <form method="post" th:action="@{/user/result}"
+          th:if="${!newExamSubjects.isEmpty()}"
+          onsubmit="return confirm('Are you sure? It is not possible to change exam result later on!');">
+        <label for="exam-subjects">Add new exam subject:</label>
+        <select id="exam-subjects" name="examSubjectId">
+            <option th:each="examSubject: ${newExamSubjects}" th:text="${examSubject.name}" th:value="${examSubject.id}">
+            </option>
+        </select>
+        <input type="text" name="grade" placeholder="Grade"/>
+        <input type="hidden" name="userId" th:value="${user.id}">
+        <input type="submit" value="Submit">
+    </form>
+</div>
+</body>
+</html>
