@@ -3,9 +3,9 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark custom-navigation"
      th:fragment="navbar"
-     th:with="user = ${#authentication.principal},
-     isAuthorized = ${!user.equals('anonymousUser')},
-     isAdmin = ${!user.equals('anonymousUser') && user.authorities.toString().contains('ADMIN')}">
+     th:with="user = ${#authentication?.principal},
+     isAuthorized = ${!'anonymousUser'.equals(user) && user != null},
+     isAdmin = ${user != null && !'anonymousUser'.equals(user) && user?.authorities?.toString()?.contains('ADMIN')}">
     <a class="navbar-brand" href="/">Selection Committee</a>
     <div class="collapse navbar-collapse" id="navbarText">
         <ul class="navbar-nav mr-auto">
